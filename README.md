@@ -1,3 +1,12 @@
+# Movie app
+
+Приложение помогает пользователю не забыть о том, какой фильм стоит посмотреть.
+
+В приложении используются:
+
+- [Kinopoisk Api Unofficial](https://kinopoiskapiunofficial.tech/)
+- [Firebase](https://firebase.google.com) (для авторизации пользователя через Google и хранения его списка для просмотра в Cloud Firestore)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
