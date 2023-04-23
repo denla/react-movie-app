@@ -35,8 +35,6 @@ export const Film = () => {
 
   let isAdded;
   if (reviews) {
-    console.log('gogogog');
-    console.log(reviews);
     isAdded = reviews.filter((obj) => obj.film.kinopoiskId == filmId).length;
   }
 

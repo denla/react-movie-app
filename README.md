@@ -7,6 +7,8 @@
 - [Kinopoisk Api Unofficial](https://kinopoiskapiunofficial.tech/)
 - [Firebase](https://firebase.google.com) (для авторизации пользователя через Google и хранения его списка для просмотра в Cloud Firestore)
 
+![alt text](./src/images/preview.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

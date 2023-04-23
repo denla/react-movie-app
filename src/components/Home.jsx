@@ -28,7 +28,7 @@ export const Home = () => {
   return (
     <>
       <div className="profile__watchlist">
-        <h3>Топ фильмов</h3>
+        <h2>Топ фильмов</h2>
         <div className="cards">
           {!loading &&
             top.map((film) => <Card obj={film} rating={film.rating} filmId={film.filmId} />)}

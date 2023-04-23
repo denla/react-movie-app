@@ -255,6 +255,11 @@ button:active,
   gap: 20px;
   border-radius: 8px;
   justify-content: center;
+  align-items: center;
+}
+
+.login__logo {
+  width: 80px;
 }
 
 .profile {
@@ -276,4 +281,8 @@ button:active,
 
 .profile__watchlist {
   padding: 30px 20px;
+}
+
+.profile__alert {
+  width: 100%;
 }

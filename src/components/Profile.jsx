@@ -8,6 +8,10 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 import { Card } from './Card';
 
+import { useNavigate } from 'react-router-dom';
+
+import logo from '../images/logo.png';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyCy0yljtdrb27cIoZEL8ABsGSGpiRsYzvI',
@@ -26,6 +30,7 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
 export const Profile = () => {
+  const navigate = useNavigate();
   const { loggedUser, setLoggedUser, reviews, setReviews } = React.useContext(authContext);
   const [loading, setLoading] = React.useState(true);
 
@@ -65,9 +70,10 @@ export const Profile = () => {
       {!loggedUser && (
         <div className="container">
           <div className="login">
+            <img src={logo} className="login__logo" />
             <h2 className="login__title">Смотрите. Не забывайте</h2>
             <p className="login__descr text-grey">
-              Войдите, чтобы создать свой собственный список фильмов для просмотра
+              Войдите и создайте свой собственный список фильмов для просмотра
             </p>
             <button onClick={signIn} className="btn-wide">
               Login with Google
@@ -109,6 +115,14 @@ export const Profile = () => {
                 id={obj.id}
               />
             ))}
+          {reviews && reviews.length == 0 && (
+            <div className="film__alert profile__alert">
+              В вашем списке для просмотра еще пусто
+              <button className="btn-main btn-wide" onClick={() => navigate('/')}>
+                К фильмам
+              </button>
+            </div>
+          )}
         </div>
       </div>
       {/* <button onClick={addData}>Add data</button> */}
