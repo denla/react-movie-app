@@ -22,9 +22,9 @@ a {
   width: 1024px;
   flex-wrap: wrap;
   margin: auto;
-  justify-content: space-between;
   padding: 30px 0;
   row-gap: 30px;
+  column-gap: 30px;
 }
 
 .card {
@@ -128,6 +128,27 @@ button {
   transition: 0.15s ease;
 }
 
+.card__remove {
+  opacity: 0;
+  user-select: none;
+  right: 10px;
+  top: 10px;
+  background: #ffffffb8;
+  padding: 5px;
+  backdrop-filter: blur(30px);
+  position: absolute;
+  border-radius: 8px;
+  box-sizing: border-box;
+  align-items: center;
+  display: flex;
+  transition: 0.15s ease;
+}
+
+.card:hover .card__remove {
+  opacity: 1;
+  user-select: all;
+}
+
 .card:hover .card__cover {
   transform: scale(1.02);
 }
@@ -218,7 +239,8 @@ button {
 }
 
 button:active,
-.staff__item:active {
+.staff__item:active,
+.card__remove:active {
   transform: scale(0.98);
 }
 

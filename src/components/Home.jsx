@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card } from './Card';
 
+import key from '../config';
+
 export const Home = () => {
   const [top, setTop] = React.useState();
   const [loading, setLoading] = React.useState(true);
@@ -10,7 +12,7 @@ export const Home = () => {
     fetch('https://kinopoiskapiunofficial.tech/api/v2.2/films/top', {
       method: 'GET',
       headers: {
-        'X-API-KEY': '37a1397d-dfdd-4c55-a2bf-e6159b15350c',
+        'X-API-KEY': key,
         'Content-Type': 'application/json',
       },
     })

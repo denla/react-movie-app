@@ -12,6 +12,8 @@ import { addDoc, collection } from 'firebase/firestore';
 import kinopoiskIcon from '../images/kinopoisk.svg';
 import { useNavigate } from 'react-router-dom';
 
+import key from '../config';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyCy0yljtdrb27cIoZEL8ABsGSGpiRsYzvI',
@@ -30,7 +32,13 @@ export const Film = () => {
   const { loggedUser, setLoggedUser, reviews, setReviews } = React.useContext(authContext);
   const { filmId } = useParams();
   console.log('reviews');
-  const isAdded = reviews.filter((obj) => obj.film.kinopoiskId == filmId).length;
+
+  let isAdded;
+  if (reviews) {
+    console.log('gogogog');
+    console.log(reviews);
+    isAdded = reviews.filter((obj) => obj.film.kinopoiskId == filmId).length;
+  }
 
   const [currentFilm, setCurrentFilm] = React.useState();
   const [staff, setStaff] = React.useState(null);
@@ -45,8 +53,7 @@ export const Film = () => {
         authorId: loggedUser.uid,
         film: currentFilm,
       });
-
-      console.log('Document written with ID: ', docRef.id);
+      setReviews([...reviews, { authorId: loggedUser.uid, film: currentFilm }]);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
@@ -57,7 +64,7 @@ export const Film = () => {
     fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}`, {
       method: 'GET',
       headers: {
-        'X-API-KEY': '37a1397d-dfdd-4c55-a2bf-e6159b15350c',
+        'X-API-KEY': key,
         'Content-Type': 'application/json',
       },
     })
@@ -75,7 +82,7 @@ export const Film = () => {
       {
         method: 'GET',
         headers: {
-          'X-API-KEY': '37a1397d-dfdd-4c55-a2bf-e6159b15350c',
+          'X-API-KEY': key,
           'Content-Type': 'application/json',
         },
       },
@@ -97,25 +104,25 @@ export const Film = () => {
     <div className="container">
       <div>
         {!loading && (
-          <div class="film">
-            <div class="film__info">
+          <div className="film">
+            <div className="film__info">
               <div
                 class="film__cover"
                 style={{ background: 'url(' + currentFilm.posterUrl + ')' }}
               ></div>
             </div>
-            <div class="film__desc">
-              <h2 class="film__name">{currentFilm.nameRu}</h2>
-              <h3 class="film__year">{currentFilm.year}</h3>
-              <div class="film__rating">
+            <div className="film__desc">
+              <h2 className="film__name">{currentFilm.nameRu}</h2>
+              <h3 className="film__year">{currentFilm.year}</h3>
+              <div className="film__rating">
                 <img src={kinopoiskIcon} />
                 {currentFilm.ratingKinopoisk}
               </div>
               {loggedUser ? (
                 isAdded ? (
-                  <button class="btn-wide">Добавлен в список</button>
+                  <button className="btn-wide">Добавлен в список</button>
                 ) : (
-                  <button class="btn-main btn-wide" onClick={addData}>
+                  <button className="btn-main btn-wide" onClick={addData}>
                     Посмотрю
                   </button>
                 )
@@ -129,18 +136,18 @@ export const Film = () => {
               )}
 
               <h4>О фильме</h4>
-              <p class="film__text text-grey">{currentFilm.description}</p>
+              <p className="film__text text-grey">{currentFilm.description}</p>
               <h4>Актеры и съемочная группа</h4>
-              <div class="staff">
+              <div className="staff">
                 {staff &&
                   staff.map((obj) => (
-                    <div class="staff__item">
+                    <div className="staff__item">
                       <div
-                        class="staff__avatar"
+                        className="staff__avatar"
                         style={{ background: 'url(' + obj.posterUrl + ') 0 -20px' }}
                       ></div>
-                      <p class="staff__name">{obj.nameRu}</p>
-                      <p class="staff__subtitle text-grey">{obj.description}</p>
+                      <p className="staff__name">{obj.nameRu}</p>
+                      <p className="staff__subtitle text-grey">{obj.description}</p>
                     </div>
                   ))}
               </div>

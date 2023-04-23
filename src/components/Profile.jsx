@@ -106,6 +106,7 @@ export const Profile = () => {
                 obj={obj.film}
                 rating={obj.film.ratingKinopoisk}
                 filmId={obj.film.kinopoiskId}
+                id={obj.id}
               />
             ))}
         </div>
