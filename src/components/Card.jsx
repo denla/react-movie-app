@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import starIcon from "../images/icon-star.svg";
-// import { isInWatchList } from "../hooks/isInWatchList";
+import { isInWatchList } from "../hooks/useWatchList";
 
 import CoverLoader from "./skeletons/CoverLoader";
 
-import { useWatchList } from "../hooks/useWatchList";
-
 export const Card = ({ obj, rating, filmId, onAddClick }) => {
   const location = useLocation();
-  const { isInWatchList, toggleFilm } = useWatchList();
 
   const [isCoverLoading, setIsCoverLoading] = useState(true);
 

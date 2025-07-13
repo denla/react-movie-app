@@ -1,14 +1,12 @@
+// components/ConfirmModal.js
 import React from "react";
 import closeIcon from "../images/icon-close.svg";
 
-//import custom hook
-// import { isInWatchList } from "../hooks/useWatchList";
-
-import { useWatchList } from "../hooks/useWatchList";
+//import hooks
+import { isInWatchList } from "../hooks/useWatchList";
 
 export const Modal = ({ visible, currentFilm, onConfirm, onCancel }) => {
   //   if (!visible) return null;
-  const { isInWatchList, toggleFilm } = useWatchList();
 
   return (
     <div

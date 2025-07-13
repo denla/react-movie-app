@@ -8,6 +8,8 @@ import key from "../config";
 import { Modal } from "../components/Modal";
 import CardLoader from "../components/skeletons/CardLoader";
 
+import { useWatchList } from "../hooks/useWatchList";
+
 export const Home = () => {
   const [top, setTop] = useState(filmsData);
   const [page, setPage] = useState(1);

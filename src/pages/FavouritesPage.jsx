@@ -5,13 +5,10 @@ import { Card } from "../components/Card";
 import { Link } from "react-router";
 
 import EmptyState from "../components/EmptyState";
-// import { isInWatchList, toggleFilm } from "../hooks/useWatchList";
-
-import { useWatchList } from "../hooks/useWatchList";
+import { isInWatchList } from "../hooks/useWatchList";
 
 export const FavouritesPage = () => {
   const [watchList, setWatchList] = React.useState(null);
-  const { isInWatchList, toggleFilm } = useWatchList();
 
   useEffect(() => {
     // localStorage.removeItem("watchList");
@@ -41,21 +38,19 @@ export const FavouritesPage = () => {
     }
 
     // Проверим, есть ли уже этот фильм
-    // const alreadyExists = isInWatchList(selectedFilm.kinopoiskId);
+    const alreadyExists = isInWatchList(selectedFilm.kinopoiskId);
 
-    toggleFilm(selectedFilm);
-
-    // if (!alreadyExists) {
-    //   const updatedList = [...watchList, selectedFilm];
-    //   localStorage.setItem("watchList", JSON.stringify(updatedList));
-    //   console.log("Добавлен в список:", selectedFilm);
-    // } else {
-    //   const updatedList = watchList.filter(
-    //     (film) => film.kinopoiskId !== selectedFilm.kinopoiskId
-    //   );
-    //   localStorage.setItem("watchList", JSON.stringify(updatedList));
-    //   console.log("Удаляем");
-    // }
+    if (!alreadyExists) {
+      const updatedList = [...watchList, selectedFilm];
+      localStorage.setItem("watchList", JSON.stringify(updatedList));
+      console.log("Добавлен в список:", selectedFilm);
+    } else {
+      const updatedList = watchList.filter(
+        (film) => film.kinopoiskId !== selectedFilm.kinopoiskId
+      );
+      localStorage.setItem("watchList", JSON.stringify(updatedList));
+      console.log("Удаляем");
+    }
 
     setShowModal(false);
   };
