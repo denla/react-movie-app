@@ -1,13 +1,8 @@
-// components/ConfirmModal.js
-import React from "react";
 import closeIcon from "../images/icon-close.svg";
-
-//import hooks
-import { isInWatchList } from "../hooks/useWatchList";
+import { useWatch } from "../context/WatchContext";
 
 export const Modal = ({ visible, currentFilm, onConfirm, onCancel }) => {
-  //   if (!visible) return null;
-
+  const { isInWatchList } = useWatch();
   return (
     <div
       className={`modal-overlay ${!visible && `modal-hidden`} `}
@@ -15,29 +10,26 @@ export const Modal = ({ visible, currentFilm, onConfirm, onCancel }) => {
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <button className="btn-round modal-close" onClick={onCancel}>
-          <img src={closeIcon} />
+          <img src={closeIcon} alt="Закрыть" />
         </button>
-
         {currentFilm && (
-          <>
-            <div className="modal-title">
-              {isInWatchList(currentFilm.kinopoiskId) ? (
-                <span>Удалить из избранного?</span>
-              ) : (
-                <span>Добавить в избранное?</span>
-              )}
-              <div className="modal-film">
-                <div
-                  className="card__cover"
-                  style={{ background: `url(${currentFilm.posterUrl})` }}
-                ></div>
-                <div className="card__info">
-                  <span className="card__name">{currentFilm.nameRu}</span>
-                  <span className="card__subtitle">{currentFilm.year}</span>
-                </div>
+          <div className="modal-title">
+            <span>
+              {isInWatchList(currentFilm.kinopoiskId)
+                ? "Удалить из избранного?"
+                : "Добавить в избранное?"}
+            </span>
+            <div className="modal-film">
+              <div
+                className="card__cover"
+                style={{ background: `url(${currentFilm.posterUrl})` }}
+              ></div>
+              <div className="card__info">
+                <span className="card__name">{currentFilm.nameRu}</span>
+                <span className="card__subtitle">{currentFilm.year}</span>
               </div>
             </div>
-          </>
+          </div>
         )}
 
         <div className="modal-buttons">

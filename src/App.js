@@ -7,7 +7,7 @@ import { FavouritesPage } from "./pages/FavouritesPage";
 import { SearchPage } from "./pages/SearchPage";
 import { Header } from "./components/Header";
 
-import { WatchListProvider } from "./context/WatchListContext";
+import { WatchProvider } from "./context/WatchContext";
 
 export const authContext = React.createContext({});
 
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <WatchListProvider>
+        <WatchProvider>
           <authContext.Provider
             value={{ loggedUser, setLoggedUser, reviews, setReviews }}
           >
@@ -30,7 +30,7 @@ function App() {
               <Route path="/search" element={<SearchPage />} />
             </Routes>
           </authContext.Provider>
-        </WatchListProvider>
+        </WatchProvider>
       </div>
     </div>
   );

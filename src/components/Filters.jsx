@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Slider from "@mui/material/Slider";
 import { filtersData } from "../data/filtersData";
@@ -6,7 +6,7 @@ import closeIcon from "../images/icon-close.svg";
 
 const currentYear = new Date().getFullYear();
 
-export const Filters = ({ visible, setVisible, onFilter }) => {
+export const Filters = ({ visible, setVisible }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -23,13 +23,7 @@ export const Filters = ({ visible, setVisible, onFilter }) => {
     setSelectedGenres(genres);
     setRatingRange([ratingFrom, ratingTo]);
     setYearRange([yearFrom, yearTo]);
-
-    onFilter({
-      genres,
-      ratingRange: [ratingFrom, ratingTo],
-      yearRange: [yearFrom, yearTo],
-    });
-  }, []);
+  }, [visible]);
 
   const updateURLParams = (genres, rating, year) => {
     const params = new URLSearchParams();
@@ -41,25 +35,33 @@ export const Filters = ({ visible, setVisible, onFilter }) => {
     if (year[1] !== currentYear) params.set("yearTo", year[1]);
 
     setSearchParams(params);
-    onFilter({ genres, ratingRange: rating, yearRange: year });
   };
 
   const toggleGenre = (genre) => {
-    const newGenres = selectedGenres.includes(genre)
-      ? selectedGenres.filter((g) => g !== genre)
-      : [...selectedGenres, genre];
-    setSelectedGenres(newGenres);
-    updateURLParams(newGenres, ratingRange, yearRange);
+    setSelectedGenres((prev) =>
+      prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
+    );
   };
 
   const handleRatingSlider = (e, newValue) => {
     setRatingRange(newValue);
-    updateURLParams(selectedGenres, newValue, yearRange);
   };
 
   const handleYearSlider = (e, newValue) => {
     setYearRange(newValue);
-    updateURLParams(selectedGenres, ratingRange, newValue);
+  };
+
+  const applyFilters = () => {
+    updateURLParams(selectedGenres, ratingRange, yearRange);
+    setVisible(false);
+  };
+
+  const resetFilters = () => {
+    setSelectedGenres([]);
+    setRatingRange([0, 10]);
+    setYearRange([1990, currentYear]);
+    setSearchParams({});
+    setVisible(false);
   };
 
   return (
@@ -74,6 +76,7 @@ export const Filters = ({ visible, setVisible, onFilter }) => {
         >
           <img src={closeIcon} />
         </button>
+
         <h3>Жанры</h3>
         <div className="genre-options">
           {filtersData.genres.slice(0, 10).map((genre) => (
@@ -99,9 +102,7 @@ export const Filters = ({ visible, setVisible, onFilter }) => {
           min={0}
           max={10}
           size="small"
-          sx={(t) => ({
-            color: "#006aff",
-          })}
+          sx={{ color: "#006aff" }}
           disableSwap
         />
 
@@ -115,11 +116,18 @@ export const Filters = ({ visible, setVisible, onFilter }) => {
           min={1990}
           max={currentYear}
           size="small"
-          sx={(t) => ({
-            color: "#006aff",
-          })}
+          sx={{ color: "#006aff" }}
           disableSwap
         />
+
+        <div className="modal-buttons" style={{ marginTop: "20px" }}>
+          <button className="btn-main btn-wide" onClick={applyFilters}>
+            Применить
+          </button>
+          <button className="btn-wide" onClick={resetFilters}>
+            Сбросить
+          </button>
+        </div>
       </div>
     </div>
   );
