@@ -1,10 +1,13 @@
-import './App.css';
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Film } from './components/Film';
-import { Home } from './components/Home';
-import { Profile } from './components/Profile';
-import { Header } from './components/Header';
+import "./App.css";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Film } from "./pages/FilmPage";
+import { Home } from "./pages/HomePage";
+import { FavouritesPage } from "./pages/FavouritesPage";
+import { SearchPage } from "./pages/SearchPage";
+import { Header } from "./components/Header";
+
+import { WatchListProvider } from "./context/WatchListContext";
 
 export const authContext = React.createContext({});
 
@@ -15,14 +18,19 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <authContext.Provider value={{ loggedUser, setLoggedUser, reviews, setReviews }}>
-          <Header />
-          <Routes>
-            <Route path="/film/:filmId" element={<Film />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </authContext.Provider>
+        <WatchListProvider>
+          <authContext.Provider
+            value={{ loggedUser, setLoggedUser, reviews, setReviews }}
+          >
+            <Header />
+            <Routes>
+              <Route path="/film/:filmId" element={<Film />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/favourites" element={<FavouritesPage />} />
+              <Route path="/search" element={<SearchPage />} />
+            </Routes>
+          </authContext.Provider>
+        </WatchListProvider>
       </div>
     </div>
   );
